@@ -1,6 +1,7 @@
-import Cart from "@/components/cart";
+import Carts from "@/components/carts";
 import NavProfile from "@/components/nav-profile";
 import { ModeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
 import { Container } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -17,9 +18,11 @@ const Navbar = async () => {
             {session ? (
               <NavProfile />
             ) : (
-              <Link href="/api/auth/signin">Signin</Link>
+              <Link href="/api/auth/signin">
+                <Button size="sm">Signin</Button>
+              </Link>
             )}
-            <Cart />
+            <Carts />
             <ModeToggle />
           </ul>
         </nav>
