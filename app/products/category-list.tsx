@@ -1,8 +1,7 @@
 "use client";
 import Spinner from "@/components/spinner";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Category } from "@prisma/client";
-import { Box, Flex, Heading } from "@radix-ui/themes";
+import { Box, Flex, Heading, RadioGroup, Text } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,6 +17,8 @@ const CategoryList = () => {
     if (categoryId) params.append("categoryId", categoryId);
     if (searchParams.get("orderBy"))
       params.append("orderBy", searchParams.get("orderBy")!);
+    if (searchParams.get("price"))
+      params.append("price", searchParams.get("price")!);
 
     const query = params.size ? "?" + params.toString() : "";
     router.push("/products" + query);
@@ -47,20 +48,21 @@ const CategoryList = () => {
         </div>
       ) : (
         <>
-          {categorys.map((category) => (
-            <Flex key={category.id} align="center" gap="2" mb="3">
-              <Checkbox
-                id={category.id}
-                onCheckedChange={() => onValueChange(category.id)}
-              />
-              <label
-                htmlFor={category.id}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                {category.name}
-              </label>
+          <RadioGroup.Root
+            onValueChange={onValueChange}
+            defaultValue={searchParams.get("categoryId") || ""}
+          >
+            <Flex gap="2" direction="column">
+              {categorys.map((category) => (
+                <Text key={category.id} as="label" size="2">
+                  <Flex gap="2">
+                    <RadioGroup.Item value={category.id} />
+                    {category.name}
+                  </Flex>
+                </Text>
+              ))}
             </Flex>
-          ))}
+          </RadioGroup.Root>
         </>
       )}
     </Box>

@@ -21,10 +21,19 @@ const Actions = () => {
         <ProductFilter />
       </div>
       <Select
+        defaultValue="asc"
         onValueChange={(value) => {
-          value === "all"
-            ? router.push("/products")
-            : router.push(`/products?orderBy=${value}`);
+          const params = new URLSearchParams();
+          params.append("orderBy", value);
+          if (searchParams.get("page"))
+            params.append("page", searchParams.get("page")!);
+          if (searchParams.get("categoryId"))
+            params.append("categoryId", searchParams.get("categoryId")!);
+          if (searchParams.get("price"))
+            params.append("price", searchParams.get("price")!);
+
+          const query = params.size ? "?" + params.toString() : "";
+          router.push("/products" + query);
         }}
       >
         <SelectTrigger className="w-[180px]">

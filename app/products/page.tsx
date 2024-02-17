@@ -1,5 +1,6 @@
 import prisma from "@/prisma/client";
 import { Container, Grid } from "@radix-ui/themes";
+import { notFound } from "next/navigation";
 import Pagination from "./pagination";
 import Products from "./products";
 import Sidebar from "./sidebar";
@@ -17,6 +18,13 @@ const ProductsPage = async ({ searchParams }: Props) => {
   const page = parseInt(searchParams.page) || 1;
   const pageSize = 6;
   const price = parseInt(searchParams.price) || undefined;
+
+  const orderBy = () => {
+    if (searchParams.orderBy === "asc") return "asc";
+    if (searchParams.orderBy === "desc") return "desc";
+    return "asc";
+  };
+
   const products = await prisma.product.findMany({
     where: {
       categoryId: searchParams.categoryId,
@@ -25,11 +33,14 @@ const ProductsPage = async ({ searchParams }: Props) => {
       },
     },
     orderBy: {
-      name: searchParams.orderBy,
+      name: orderBy(),
     },
     skip: (page - 1) * pageSize,
     take: pageSize,
   });
+
+  if (!products) notFound;
+
   const productCount = await prisma.product.count({
     where: {
       categoryId: searchParams.categoryId,
