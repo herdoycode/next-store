@@ -9,14 +9,21 @@ interface Props {
     page: string;
     categoryId: string;
     orderBy: "asc" | "desc";
+    price: string;
   };
 }
 
 const ProductsPage = async ({ searchParams }: Props) => {
   const page = parseInt(searchParams.page) || 1;
   const pageSize = 6;
+  const price = parseInt(searchParams.price) || undefined;
   const products = await prisma.product.findMany({
-    where: { categoryId: searchParams.categoryId },
+    where: {
+      categoryId: searchParams.categoryId,
+      price: {
+        lte: price,
+      },
+    },
     orderBy: {
       name: searchParams.orderBy,
     },
@@ -26,6 +33,9 @@ const ProductsPage = async ({ searchParams }: Props) => {
   const productCount = await prisma.product.count({
     where: {
       categoryId: searchParams.categoryId,
+      price: {
+        lte: price,
+      },
     },
   });
   return (

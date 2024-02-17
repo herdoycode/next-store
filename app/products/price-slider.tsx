@@ -2,10 +2,19 @@
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { Box, Flex, Heading } from "@radix-ui/themes";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const PriceSlider = () => {
   const [range, setRange] = useState<number>(100);
+  const router = useRouter();
+
+  useEffect(() => {
+    range === 100
+      ? router.push("/products")
+      : router.push(`/products?price=${range}`);
+  }, [range]);
+
   return (
     <Box className="shadow-md rounded-md" p="3">
       <Heading as="h3" mb="3">
@@ -20,6 +29,7 @@ const PriceSlider = () => {
       <Flex align="center" justify="between" gap="6" mt="6">
         <Input placeholder="0" disabled />
         <Input
+          disabled
           value={range}
           onChange={(e) => setRange(parseInt(e.target.value))}
         />
