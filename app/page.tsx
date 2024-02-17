@@ -1,13 +1,11 @@
 import React from "react";
-import Navbar from "./navbar";
+import { Container } from "@radix-ui/themes";
 
 const Home = () => {
   return (
-    <>
-      <header>
-        <Navbar />
-      </header>
-    </>
+    <Container>
+      <h3>Home page</h3>
+    </Container>
   );
 };
 

@@ -4,6 +4,7 @@ import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import { Theme } from "@radix-ui/themes";
 import { ThemeProvider } from "@/components/theme-provider";
+import Navbar from "./navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Theme>{children}</Theme>
+          <Theme>
+            <header>
+              <Navbar />
+            </header>
+            {children}
+          </Theme>
         </ThemeProvider>
       </body>
     </html>
