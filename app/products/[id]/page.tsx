@@ -1,10 +1,9 @@
-import { Box, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import prisma from "@/prisma/client";
+import { Box, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import QuantityButtons from "./quantity-buttons";
 import AddToCart from "./add-to-cart";
+import QuantityButtons from "./quantity-buttons";
 
 interface Props {
   params: {
@@ -34,7 +33,7 @@ const ProductDetails = async ({ params }: Props) => {
             </Heading>
             <Text> {product.description} </Text>
             <QuantityButtons />
-            <AddToCart />
+            <AddToCart product={product} />
           </Flex>
         </Flex>
       </Container>
