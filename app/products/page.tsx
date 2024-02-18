@@ -19,21 +19,27 @@ const ProductsPage = async ({ searchParams }: Props) => {
   const pageSize = 6;
   const price = parseInt(searchParams.price) || undefined;
 
-  const orderBy = () => {
+  const setOrderBy = () => {
     if (searchParams.orderBy === "asc") return "asc";
     if (searchParams.orderBy === "desc") return "desc";
     return "asc";
   };
 
-  const products = await prisma.product.findMany({
-    where: {
-      categoryId: searchParams.categoryId,
-      price: {
-        lte: price,
-      },
+  const categoryId =
+    searchParams.categoryId === "all" ? undefined : searchParams.categoryId;
+
+  const where = {
+    categoryId,
+    price: {
+      lte: price,
     },
+  };
+
+  // Get filtered products
+  const products = await prisma.product.findMany({
+    where,
     orderBy: {
-      name: orderBy(),
+      name: setOrderBy(),
     },
     skip: (page - 1) * pageSize,
     take: pageSize,

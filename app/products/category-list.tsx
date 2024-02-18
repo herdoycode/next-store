@@ -14,7 +14,9 @@ const CategoryList = () => {
 
   const onValueChange = (categoryId: string) => {
     const params = new URLSearchParams();
-    if (categoryId) params.append("categoryId", categoryId);
+    categoryId === "all"
+      ? params.delete("categoryId")
+      : params.append("categoryId", categoryId);
     if (searchParams.get("orderBy"))
       params.append("orderBy", searchParams.get("orderBy")!);
     if (searchParams.get("price"))
@@ -50,9 +52,15 @@ const CategoryList = () => {
         <>
           <RadioGroup.Root
             onValueChange={onValueChange}
-            defaultValue={searchParams.get("categoryId") || ""}
+            defaultValue={searchParams.get("categoryId") || "all"}
           >
             <Flex gap="2" direction="column">
+              <Text as="label" size="2">
+                <Flex gap="2">
+                  <RadioGroup.Item value="all" />
+                  All
+                </Flex>
+              </Text>
               {categorys.map((category) => (
                 <Text key={category.id} as="label" size="2">
                   <Flex gap="2">
