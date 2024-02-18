@@ -46,6 +46,8 @@ const CategoryList = () => {
       ) : (
         <>
           <RadioGroup.Root
+            variant="soft"
+            size="3"
             onValueChange={onValueChange}
             defaultValue={searchParams.get("categoryId") || "all"}
           >

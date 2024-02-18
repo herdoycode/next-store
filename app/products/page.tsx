@@ -34,7 +34,7 @@ const ProductsPage = async ({ searchParams }: Props) => {
         lte: setPrice,
       },
       name: {
-        contains: searchParams.name,
+        startsWith: searchParams.name,
         mode: "insensitive",
       },
     },
