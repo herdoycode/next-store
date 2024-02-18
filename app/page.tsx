@@ -1,12 +1,9 @@
-import React from "react";
-import { Container } from "@radix-ui/themes";
+"use client";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
-  return (
-    <Container>
-      <h3>Home page</h3>
-    </Container>
-  );
+  const router = useRouter();
+  return router.push("/products");
 };
 
 export default Home;

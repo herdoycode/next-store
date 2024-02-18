@@ -13,15 +13,7 @@ const Navbar = async () => {
     <div className="border-b px-4">
       <Container>
         <nav className="flex items-center justify-between h-16">
-          <Link href="/">Next-Store</Link>
-          <ul className="flex items-center gap-6">
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/products">Products</Link>
-            </li>
-          </ul>
+          <Link href="/products">Next-Store</Link>
           <div className="flex items-center gap-4 md:gap-8">
             {session ? (
               <NavProfile />

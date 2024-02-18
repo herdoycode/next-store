@@ -1,10 +1,11 @@
+import { ThemeProvider } from "@/components/theme-provider";
+import { Theme } from "@radix-ui/themes";
+import "@radix-ui/themes/styles.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@radix-ui/themes/styles.css";
 import "./globals.css";
-import { Theme } from "@radix-ui/themes";
-import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "./navbar";
+import QueryClientProvider from "./query-client-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,10 +29,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Theme>
-            <header>
-              <Navbar />
-            </header>
-            {children}
+            <QueryClientProvider>
+              <header>
+                <Navbar />
+              </header>
+              {children}
+            </QueryClientProvider>
           </Theme>
         </ThemeProvider>
       </body>

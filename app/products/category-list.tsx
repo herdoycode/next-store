@@ -1,14 +1,12 @@
 "use client";
 import Spinner from "@/components/spinner";
-import { Category } from "@prisma/client";
 import { Box, Flex, Heading, RadioGroup, Text } from "@radix-ui/themes";
-import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import useCategorys from "../hooks/useCategorys";
 
 const CategoryList = () => {
-  const [categorys, setCategorys] = useState<Category[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { data: categorys, isLoading } = useCategorys();
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -21,25 +19,12 @@ const CategoryList = () => {
     router.push("?" + params.toString());
   };
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("/api/categorys")
-      .then(({ data }) => {
-        setCategorys(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-      });
-  }, []);
-
   return (
     <Box className="shadow-md rounded-md" p="3">
       <Heading as="h3" mb="3">
         Categorys
       </Heading>
-      {loading ? (
+      {isLoading ? (
         <div className="w-full h-full flex items-center justify-center">
           <Spinner />
         </div>
@@ -58,7 +43,7 @@ const CategoryList = () => {
                   All
                 </Flex>
               </Text>
-              {categorys.map((category) => (
+              {categorys?.map((category) => (
                 <Text key={category.id} as="label" size="2">
                   <Flex gap="2">
                     <RadioGroup.Item value={category.id} />
