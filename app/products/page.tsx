@@ -11,33 +11,33 @@ interface Props {
     categoryId: string;
     orderBy: "asc" | "desc";
     price: string;
+    name: string;
   };
 }
 
 const ProductsPage = async ({ searchParams }: Props) => {
   const page = parseInt(searchParams.page) || 1;
   const pageSize = 6;
-  const price = parseInt(searchParams.price) || undefined;
 
+  const setPrice = parseInt(searchParams.price) || undefined;
   const setOrderBy = () => {
     if (searchParams.orderBy === "asc") return "asc";
     if (searchParams.orderBy === "desc") return "desc";
     return "asc";
   };
 
-  const categoryId =
-    searchParams.categoryId === "all" ? undefined : searchParams.categoryId;
-
-  const where = {
-    categoryId,
-    price: {
-      lte: price,
-    },
-  };
-
   // Get filtered products
   const products = await prisma.product.findMany({
-    where,
+    where: {
+      categoryId: searchParams.categoryId,
+      price: {
+        lte: setPrice,
+      },
+      name: {
+        contains: searchParams.name,
+        mode: "insensitive",
+      },
+    },
     orderBy: {
       name: setOrderBy(),
     },
@@ -51,7 +51,7 @@ const ProductsPage = async ({ searchParams }: Props) => {
     where: {
       categoryId: searchParams.categoryId,
       price: {
-        lte: price,
+        lte: setPrice,
       },
     },
   });

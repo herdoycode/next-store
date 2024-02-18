@@ -13,17 +13,12 @@ const CategoryList = () => {
   const searchParams = useSearchParams();
 
   const onValueChange = (categoryId: string) => {
-    const params = new URLSearchParams();
+    const params = new URLSearchParams(searchParams);
+    params.delete("name");
     categoryId === "all"
       ? params.delete("categoryId")
-      : params.append("categoryId", categoryId);
-    if (searchParams.get("orderBy"))
-      params.append("orderBy", searchParams.get("orderBy")!);
-    if (searchParams.get("price"))
-      params.append("price", searchParams.get("price")!);
-
-    const query = params.size ? "?" + params.toString() : "";
-    router.push("/products" + query);
+      : params.set("categoryId", categoryId);
+    router.push("?" + params.toString());
   };
 
   useEffect(() => {

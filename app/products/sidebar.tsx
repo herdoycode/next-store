@@ -4,7 +4,7 @@ import PriceSlider from "./price-slider";
 
 const Sidebar = async () => {
   return (
-    <Box className="hidden space-y-4 md:block" p="3">
+    <Box className="hidden space-y-4 lg:block" p="3">
       <CategoryList />
       <PriceSlider />
     </Box>

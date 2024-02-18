@@ -14,20 +14,11 @@ const SortOrder = () => {
   return (
     <Select
       onValueChange={(value) => {
-        const params = new URLSearchParams();
-
-        value == "all"
+        const params = new URLSearchParams(searchParams);
+        value === "all"
           ? params.delete("orderBy")
-          : params.append("orderBy", value);
-        if (searchParams.get("page"))
-          params.append("page", searchParams.get("page")!);
-        if (searchParams.get("categoryId"))
-          params.append("categoryId", searchParams.get("categoryId")!);
-        if (searchParams.get("price"))
-          params.append("price", searchParams.get("price")!);
-
-        const query = params.size ? "?" + params.toString() : "";
-        router.push("/products" + query);
+          : params.set("orderBy", value);
+        router.push("?" + params.toString());
       }}
     >
       <SelectTrigger className="w-[180px]">

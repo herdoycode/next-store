@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 const PriceSlider = () => {
-  const [range, setRange] = useState<number>(0);
+  const [range, setRange] = useState<number>(100);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -16,19 +16,12 @@ const PriceSlider = () => {
         Price
       </Heading>
       <Slider
+        defaultValue={[100]}
         onValueChange={(e) => {
           setRange(e[0]);
-          const params = new URLSearchParams();
-          params.append("price", e[0].toString());
-          if (searchParams.get("orderBy"))
-            params.append("orderBy", searchParams.get("orderBy")!);
-          if (searchParams.get("page"))
-            params.append("page", searchParams.get("page")!);
-          if (searchParams.get("categoryId"))
-            params.append("c ategoryId", searchParams.get("categoryId")!);
-
-          const query = params.size ? "?" + params.toString() : "";
-          router.push("/products" + query);
+          const params = new URLSearchParams(searchParams);
+          params.set("price", e[0].toString());
+          router.push("?" + params.toString());
         }}
         max={100}
         step={1}
