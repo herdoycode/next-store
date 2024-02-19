@@ -1,12 +1,8 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import React from "react";
+import Loading from "./products/loading";
 
 const Home = () => {
-  const router = useRouter();
-  useEffect(() => {
-    router.push("/products");
-  });
+  return <Loading />;
 };
 
 export default Home;
