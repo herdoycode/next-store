@@ -44,7 +44,12 @@ const CategoryList = () => {
                 </Flex>
               </Text>
               {categorys?.map((category) => (
-                <Text key={category.id} as="label" size="2">
+                <Text
+                  key={category.id}
+                  as="label"
+                  size="2"
+                  className="cursor-pointer"
+                >
                   <Flex gap="2">
                     <RadioGroup.Item value={category.id} />
                     {category.name}

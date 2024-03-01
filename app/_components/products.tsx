@@ -14,7 +14,7 @@ const Products = async ({ products }: Props) => {
       <Actions />
       <Grid columns={{ initial: "1fr", md: "1fr 1fr 1fr" }} gap="5">
         {products.map((product) => (
-          <Link key={product.id} href={`/products/${product.id}`}>
+          <Link key={product.id} href={`/${product.id}`}>
             <Card>
               <Inset clip="padding-box" side="top" pb="current">
                 <Image
