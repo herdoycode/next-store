@@ -12,7 +12,10 @@ const Products = async ({ products }: Props) => {
   return (
     <Box px="3">
       <Actions />
-      <Grid columns={{ initial: "1fr", md: "1fr 1fr 1fr" }} gap="5">
+      <Grid
+        gap="5"
+        columns={{ initial: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr" }}
+      >
         {products.map((product) => (
           <Link key={product.id} href={`/${product.id}`}>
             <Card>
